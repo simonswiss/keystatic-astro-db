@@ -1,0 +1,47 @@
+---
+import { getCollection, getEntry } from "astro:content"
+import { db, Like } from "astro:db"
+
+import Layout from "@/layouts/Base.astro"
+import { eq } from "astro:db"
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts")
+  return posts.map((post) => ({ params: { slug: post.slug } }))
+}
+
+const { slug } = Astro.params
+
+if (Astro.request.method === "POST") {
+  await db.insert(Like).values({ postSlug: slug })
+}
+
+const post = await getEntry("posts", slug)
+const { Content } = await post.render()
+
+const likes = await db.select().from(Like).where(eq(Like.postSlug, slug))
+
+const prettyDate = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "long",
+}).format(new Date(post.data.publishedDate))
+---
+
+<Layout>
+  <Fragment slot="title">{post.data.title}</Fragment>
+  <div class="mt-2">
+    <p class="text-sm text-slate-500">Published on {prettyDate}</p>
+  </div>
+  <div class="mt-8">
+    <Content />
+  </div>
+
+  <div class="mt-8 flex items-center gap-4">
+    <form method="POST">
+      <button
+        class="rounded-md bg-rose-500 py-2 px-4 text-white hover:bg-rose-400 active:bg-rose-600"
+        type="submit">Like</button
+      >
+    </form>
+    <p>{likes.length} {likes.length === 1 ? "like" : "likes"}</p>
+  </div>
+</Layout>

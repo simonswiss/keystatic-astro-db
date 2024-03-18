@@ -1,0 +1,28 @@
+---
+import "@/styles/styles.css"
+import { ViewTransitions } from "astro:transitions"
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro</title>
+  </head>
+  <body>
+    <header>
+      <nav class="mx-auto flex max-w-5xl gap-4 px-4">
+        <a href="/" class="py-2 underline hover:no-underline">Home</a>
+      </nav>
+    </header>
+    <main class="mx-auto max-w-5xl py-8 px-4">
+      <h1 class="text-xl font-medium">
+        <slot name="title">Fallback title here</slot>
+      </h1>
+      <slot />
+    </main>
+    <ViewTransitions />
+  </body>
+</html>

@@ -1,6 +1,12 @@
-import { db } from 'astro:db';
+import { Like, db } from "astro:db"
 
 export default async function seed() {
-	// Seed local development data.
-	// See https://docs.astro.build/en/guides/astro-db/#seed-your-database
+  await db
+    .insert(Like)
+    .values([
+      { postSlug: "my-first-blog-post" },
+      { postSlug: "my-second-blog-post" },
+      { postSlug: "my-first-blog-post" },
+      { postSlug: "my-first-blog-post" },
+    ])
 }

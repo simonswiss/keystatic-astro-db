@@ -1,16 +1,27 @@
 ---
+import Layout from "../layouts/Base.astro"
 
+import { getCollection } from "astro:content"
+import { db, Like } from "astro:db"
+
+const posts = await getCollection("posts")
+const likes = await db.select().from(Like)
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+  <Fragment slot="title">Keystatic + Astro DB</Fragment>
+  <ul class="mt-4 grid gap-2">
+    {
+      posts.map((post) => (
+        <li class="list-inside list-disc">
+          <a class="hover:underline" href={`/posts/${post.slug}`}>
+            {post.data.title}
+          </a>
+          <span class="text-slate-500">
+            ({likes.filter((like) => like.postSlug === post.slug).length} likes)
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>
