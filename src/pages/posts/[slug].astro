@@ -31,14 +31,14 @@ const prettyDate = new Intl.DateTimeFormat("en-US", {
   <div class="mt-2">
     <p class="text-sm text-slate-500">Published on {prettyDate}</p>
   </div>
-  <div class="mt-8">
+  <div class="prose lg:prose-lg mt-8">
     <Content />
   </div>
 
   <div class="mt-8 flex items-center gap-4">
     <form method="POST">
       <button
-        class="rounded-md bg-rose-500 py-2 px-4 text-white hover:bg-rose-400 active:bg-rose-600"
+        class="rounded-md bg-pink-500 px-4 py-2 text-white ring-1 ring-inset ring-black/10 hover:bg-pink-400 active:bg-pink-600"
         type="submit">Like</button
       >
     </form>
