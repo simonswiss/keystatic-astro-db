@@ -5,6 +5,8 @@ import { db, Like } from "astro:db"
 import Layout from "@/layouts/Base.astro"
 import { eq } from "astro:db"
 
+export const prerender = false
+
 export async function getStaticPaths() {
   const posts = await getCollection("posts")
   return posts.map((post) => ({ params: { slug: post.slug } }))
