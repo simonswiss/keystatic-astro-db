@@ -18,7 +18,6 @@
     "@keystatic/astro": "^5.0.0",
     "@keystatic/core": "^0.5.6",
     "@tailwindcss/typography": "^0.5.10",
-    "@tailwindcss/vite": "^0.0.0-development.1",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "astro": "^4.5.5",
