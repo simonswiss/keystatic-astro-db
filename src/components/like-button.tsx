@@ -63,7 +63,9 @@ function Likes({ slug }: LikeButtonProps) {
           {isUpdating ? (
             <Spinner />
           ) : (
-            <span className="font-mono font-medium">{query.data.length}</span>
+            <span className="font-mono font-medium">
+              {query.data.likesCount}
+            </span>
           )}
         </span>
       </button>

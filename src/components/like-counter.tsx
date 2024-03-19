@@ -2,7 +2,6 @@ import axios from "axios"
 
 import {
   useQuery,
-  useQueryClient,
   QueryClient,
   QueryClientProvider,
   useIsFetching,
@@ -37,13 +36,16 @@ function Component({ slug }: Props) {
     query.status === "pending" || query.isFetching || isFetching
 
   return (
-    <span className="text-slate-500">
-      {isUpdating ? <Spinner className="size-4 animate-spin" /> : null}
-      {query.status === "success" && (
-        <span>
-          ({query.data.length} {query.data.length === 1 ? "like" : "likes"})
-        </span>
-      )}
-    </span>
+    <>
+      <span className="text-slate-500">
+        {isUpdating ? <Spinner className="size-4 animate-spin" /> : null}
+        {query.status === "success" && (
+          <span>
+            ({query.data.likesCount}{" "}
+            {query.data.likesCount === 1 ? "like" : "likes"})
+          </span>
+        )}
+      </span>
+    </>
   )
 }
