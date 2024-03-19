@@ -40,7 +40,7 @@ function Likes({ slug }: LikeButtonProps) {
       return response.data
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["likes"] })
+      queryClient.invalidateQueries({ queryKey: ["likes", slug] })
     },
   })
   const isUpdating =

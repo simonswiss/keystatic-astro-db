@@ -2,7 +2,10 @@ import { collection, config, fields } from "@keystatic/core"
 
 export default config({
   storage: {
-    kind: "local",
+    kind: process.env.NODE_ENV === "production" ? "cloud" : "local",
+  },
+  cloud: {
+    project: "simonswiss/astro-db-test",
   },
   collections: {
     posts: collection({
