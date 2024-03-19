@@ -5,6 +5,7 @@ import {
   useQueryClient,
   QueryClient,
   QueryClientProvider,
+  useIsFetching,
 } from "@tanstack/react-query"
 import Spinner from "./spinner"
 
@@ -23,7 +24,7 @@ export default function LikeCounter({ slug }: Props) {
 }
 
 function Component({ slug }: Props) {
-  const queryClient = useQueryClient()
+  const isFetching = useIsFetching()
   const query = useQuery({
     queryKey: ["likes", slug],
     queryFn: async () => {
@@ -32,11 +33,12 @@ function Component({ slug }: Props) {
     },
   })
 
+  const isUpdating =
+    query.status === "pending" || query.isFetching || isFetching
+
   return (
     <span className="text-slate-500">
-      {query.status === "pending" && (
-        <Spinner className="size-4 animate-spin" />
-      )}
+      {isUpdating ? <Spinner className="size-4 animate-spin" /> : null}
       {query.status === "success" && (
         <span>
           ({query.data.length} {query.data.length === 1 ? "like" : "likes"})
