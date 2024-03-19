@@ -25,7 +25,7 @@ export default function LikeCounter({ slug }: Props) {
 function Component({ slug }: Props) {
   const queryClient = useQueryClient()
   const query = useQuery({
-    queryKey: ["likes"],
+    queryKey: ["likes", slug],
     queryFn: async () => {
       const { data } = await axios.get(`/api/likes/${slug}`)
       return data
@@ -38,9 +38,9 @@ function Component({ slug }: Props) {
         <Spinner className="size-4 animate-spin" />
       )}
       {query.status === "success" && (
-        <>
+        <span>
           ({query.data.length} {query.data.length === 1 ? "like" : "likes"})
-        </>
+        </span>
       )}
     </span>
   )

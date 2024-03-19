@@ -10,14 +10,16 @@ const posts = await getCollection("posts")
 
 <Layout>
   <Fragment slot="title">Keystatic + Astro DB</Fragment>
-  <ul class="mt-4 grid gap-2">
+  <ul class="mt-10 grid gap-2">
     {
       posts.map((post) => (
-        <li class="flex list-inside list-disc items-center gap-2">
-          <a class="hover:underline" href={`/posts/${post.slug}`}>
-            {post.data.title}
-          </a>
-          <LikeCounter slug={post.slug} client:load />
+        <li class="list-inside list-disc">
+          <div class="inline-flex items-center gap-2">
+            <a class="hover:underline" href={`/posts/${post.slug}`}>
+              {post.data.title}
+            </a>
+            <LikeCounter slug={post.slug} client:only="react" />
+          </div>
         </li>
       ))
     }
