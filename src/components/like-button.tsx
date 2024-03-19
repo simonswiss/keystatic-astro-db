@@ -28,7 +28,7 @@ function Likes({ slug }: LikeButtonProps) {
   const queryClient = useQueryClient()
   const isFetching = useIsFetching()
   const query = useQuery({
-    queryKey: ["likes"],
+    queryKey: ["likes", slug],
     queryFn: async () => {
       const { data } = await axios.get(`/api/likes/${slug}`)
       return data
@@ -52,7 +52,8 @@ function Likes({ slug }: LikeButtonProps) {
   return (
     <div className="flex items-center gap-2">
       <button
-        className="flex items-center gap-2 rounded-md bg-pink-500 px-4 py-2 text-white ring-1 ring-inset ring-black/10 hover:bg-pink-400 active:bg-pink-600"
+        disabled={!!isUpdating}
+        className="flex items-center gap-2 rounded-md bg-pink-500 px-4 py-2 text-white ring-1 ring-inset ring-black/10 hover:bg-pink-400 active:bg-pink-600 disabled:pointer-events-none hover:disabled:bg-pink-500"
         onClick={() => {
           mutation.mutate()
         }}
