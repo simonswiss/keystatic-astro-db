@@ -1,11 +1,8 @@
 ---
 import { getCollection, getEntry } from "astro:content"
-import { db, Like } from "astro:db"
 
+import LikeButton from "@/components/like-button"
 import Layout from "@/layouts/Base.astro"
-import { eq } from "astro:db"
-
-export const prerender = false
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts")
@@ -13,15 +10,8 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params
-
-if (Astro.request.method === "POST") {
-  await db.insert(Like).values({ postSlug: slug })
-}
-
 const post = await getEntry("posts", slug)
 const { Content } = await post.render()
-
-const likes = await db.select().from(Like).where(eq(Like.postSlug, slug))
 
 const prettyDate = new Intl.DateTimeFormat("en-US", {
   dateStyle: "long",
@@ -37,13 +27,7 @@ const prettyDate = new Intl.DateTimeFormat("en-US", {
     <Content />
   </div>
 
-  <div class="mt-8 flex items-center gap-4">
-    <form method="POST">
-      <button
-        class="rounded-md bg-pink-500 px-4 py-2 text-white ring-1 ring-inset ring-black/10 hover:bg-pink-400 active:bg-pink-600"
-        type="submit">Like</button
-      >
-    </form>
-    <p>{likes.length} {likes.length === 1 ? "like" : "likes"}</p>
+  <div class="mt-8">
+    <LikeButton slug={slug} client:load />
   </div>
 </Layout>
