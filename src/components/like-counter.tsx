@@ -38,12 +38,17 @@ function Component({ slug }: Props) {
   return (
     <>
       <span className="text-slate-500">
-        {isUpdating ? <Spinner className="size-4 animate-spin" /> : null}
-        {query.status === "success" && (
-          <span>
-            ({query.data.likesCount}{" "}
-            {query.data.likesCount === 1 ? "like" : "likes"})
-          </span>
+        {isUpdating ? (
+          <Spinner className="size-4 animate-spin" />
+        ) : (
+          <>
+            {query.status === "success" && (
+              <span>
+                ({query.data.likesCount}{" "}
+                {query.data.likesCount === 1 ? "like" : "likes"})
+              </span>
+            )}
+          </>
         )}
       </span>
     </>
